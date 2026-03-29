@@ -1,0 +1,129 @@
+' ----------------------------------------
+' ファイルを開いた時に自動で実行される処理
+' ----------------------------------------
+Sub auto_open()
+    ' F1キーを無効化する
+    Application.OnKey "{F1}", ""
+End Sub
+
+
+
+Sub Excel閉じるときの各シート整形_非表示の再表示()
+' 画面更新をさせない（チカチカするため）
+Application.ScreenUpdating = False
+'
+Dim ws As Worksheet
+' 各シートを順番に見ていく
+For Each ws In Worksheets
+' 非表示のシートを強制的に表示させる
+    ws.Visible = True
+' シート保護されてるか確認
+If ws.ProtectContents = True Then
+    '保護されてたら何もしない
+Else
+    '保護されていなかったら処理を走らせる
+    ' 行&列について非表示のものを表示させる
+    With ws.Rows
+        .Hidden = False
+    End With
+    With ws.Columns
+        .Hidden = False
+    End With
+    ' カーソルをA1に移動
+    ws.Select
+    Range("A1").Select
+    ' 表示位置を左上端に移動
+    ActiveWindow.ScrollColumn = 1
+    ActiveWindow.ScrollRow = 1
+    ' 表示倍率を１００％に戻す
+    ActiveWindow.Zoom = 100
+End If
+Next ws
+
+' １枚目のシートに移動
+Sheets(1).Select
+'画面更新を再開させておく
+Application.ScreenUpdating = True
+' メッセージを表示
+MsgBox "Excel閉じるときの各シート整形 と 非表示のシート＆行/列の再表示が完了しました"
+'
+End Sub
+
+
+
+Sub 数字の色を変える()
+    ' 実行前に開いていたシートを記憶しておく
+    Dim originalSheet As Worksheet
+    Set originalSheet = ActiveSheet
+
+    ' 画面更新をさせない（チカチカするため）
+    Application.ScreenUpdating = False
+
+    Dim ws As Worksheet
+    Dim a As Range
+    Dim piv As PivotTable
+
+    ' ▼追加：置換用の変数を用意
+    Dim sheetName1 As String
+    Dim sheetName2 As String
+
+    ' 各シートを順番に見ていく
+    For Each ws In Worksheets
+        ' シート保護されてるか確認
+        If ws.ProtectContents = True Then
+            '保護されてたら何もしない
+        Else
+            '保護されていなかったら処理を走らせる
+            ws.Activate
+
+            ' ▼追加：色を変える前に、自シートに対する不要なシート参照を削除する
+            sheetName1 = ws.Name & "!"
+            ' パターン１： シート名!
+            sheetName2 = "'" & ws.Name & "'!" ' パターン２：'シート名'!
+
+            ' UsedRange内の数式から、自シート名を置換して消去
+            ws.UsedRange.Replace What:=sheetName2, Replacement:="", LookAt:=xlPart
+            ws.UsedRange.Replace What:=sheetName1, Replacement:="", LookAt:=xlPart
+            ' ▲追加ここまで
+
+            ws.UsedRange.Select
+
+            ' ベタ打ちの数値→青、他シート参照の数式→緑、他→黒に変更
+            For Each a In Selection
+                If a.HasFormula Then
+                    If InStr(a.Formula, "!") > 0 Then
+                        a.Font.Color = RGB(112, 173, 71)
+                    Else
+                        a.Font.Color = RGB(0, 0, 0)
+                    End If
+                Else
+                    If IsNumeric(a.Value) Then
+                        a.Font.Color = vbBlue
+                    Else
+                        a.Font.Color = vbBlack
+                    End If
+                End If
+            Next a
+
+            ' pivot処理
+            On Error Resume Next ' ▼修正：エラーを無視して次へ進む設定に変更
+            For Each piv In ActiveSheet.PivotTables
+                piv.TableRange1.Select
+                Selection.Font.Color = vbBlack
+            Next piv
+            On Error GoTo 0 ' ▼修正：エラー無視の設定を解除（安全のため）
+            ' pivot処理ここまで
+
+        End If
+    Next ws
+
+    ' ▼追加：記憶しておいた元のシートに戻る
+    originalSheet.Activate
+
+    '画面更新を再開させておく
+    Application.ScreenUpdating = True
+
+    ' メッセージを表示
+    MsgBox "数字の色を整形しました"
+
+End Sub
