@@ -77,8 +77,7 @@ Sub 数字の色を変える()
             ws.Activate
 
             ' ▼追加：色を変える前に、自シートに対する不要なシート参照を削除する
-            sheetName1 = ws.Name & "!"
-            ' パターン１： シート名!
+            sheetName1 = ws.Name & "!"        ' パターン１： シート名!
             sheetName2 = "'" & ws.Name & "'!" ' パターン２：'シート名'!
 
             ' UsedRange内の数式から、自シート名を置換して消去
@@ -97,7 +96,7 @@ Sub 数字の色を変える()
                         a.Font.Color = RGB(0, 0, 0)
                     End If
                 Else
-                    If IsNumeric(a.Value) Then
+                    If IsNumeric(a.Value) = True Then
                         a.Font.Color = vbBlue
                     Else
                         a.Font.Color = vbBlack
