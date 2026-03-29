@@ -77,8 +77,8 @@ Sub 数字の色を変える()
             ws.Activate
 
             ' ▼追加：色を変える前に、自シートに対する不要なシート参照を削除する
-            sheetName1 = ws.Name & "!"        ' パターン１： シート名!
-            sheetName2 = "'" & ws.Name & "'!" ' パターン２：'シート名'!
+            sheetName1 = ws.Name & "!"        ' パターン1： シート名!
+            sheetName2 = "'" & ws.Name & "'!" ' パターン2：'シート名'!
 
             ' UsedRange内の数式から、自シート名を置換して消去
             ws.UsedRange.Replace What:=sheetName2, Replacement:="", LookAt:=xlPart
