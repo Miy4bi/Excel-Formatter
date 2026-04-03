@@ -12,7 +12,7 @@ End Sub
 ' カーソルをA1・表示倍率を100%にリセットする。保護済みシートはスキップ。
 ' ----------------------------------------
 Sub シート表示リセット()
-' 画面更新をさせない（チカチカするため）
+' 画面更新をさせない
 Application.ScreenUpdating = False
 '
 Dim ws As Worksheet
@@ -48,7 +48,7 @@ Sheets(1).Select
 '画面更新を再開させておく
 Application.ScreenUpdating = True
 ' メッセージを表示
-MsgBox "Excel閉じるときの各シート整形 と 非表示のシート＆行/列の再表示が完了しました"
+MsgBox "各シートの表示倍率とカーソル位置の整形 と 非表示のシート＆行/列の再表示が完了しました"
 '
 End Sub
 
@@ -66,14 +66,14 @@ Sub 入力値色分け()
     Dim originalSheet As Worksheet
     Set originalSheet = ActiveSheet
 
-    ' 画面更新をさせない（チカチカするため）
+    ' 画面更新をさせない
     Application.ScreenUpdating = False
 
     Dim ws As Worksheet
     Dim a As Range
     Dim piv As PivotTable
 
-    ' ▼追加：置換用の変数を用意
+    '　置換用の変数を用意
     Dim sheetName1 As String
     Dim sheetName2 As String
 
@@ -126,10 +126,10 @@ Sub 入力値色分け()
         End If
     Next ws
 
-    ' ▼追加：記憶しておいた元のシートに戻る
+    '　記憶しておいた元のシートに戻る
     originalSheet.Activate
 
-    '画面更新を再開させておく
+    '　画面更新を再開させておく
     Application.ScreenUpdating = True
 
     ' メッセージを表示
@@ -181,7 +181,7 @@ Sub 表罫線を設定()
         .ColorIndex = xlAutomatic
     End With
 
-    ' 追加：選択範囲の内側の水平線（データ行の間の罫線 / 細線）
+    ' 選択範囲の内側の水平線（データ行の間の罫線 / 細線）
     If rng.Rows.Count > 2 Then
         With rng.Borders(xlInsideHorizontal)
             .LineStyle = xlContinuous
