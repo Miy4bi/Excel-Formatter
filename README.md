@@ -1,4 +1,4 @@
-# 📊 Excel Model Formatter
+# 📊 Excel Formatter
 
 コンサルタント向けの Excel 整形マクロ集です。  
 モデルやレポートを仕上げる際の定型作業を自動化できます。
