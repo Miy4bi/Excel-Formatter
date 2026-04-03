@@ -126,3 +126,62 @@ Sub 数字の色を変える()
     MsgBox "数字の色を整形しました"
 
 End Sub
+
+Sub 表罫線を設定()
+    Dim rng As Range
+
+    ' 選択されているのがセル範囲かチェック
+    If TypeName(Selection) <> "Range" Then
+        MsgBox "表にしたいセル範囲を選択してから実行してください。", vbExclamation, "
+        Exit Sub
+    End If
+
+    Set rng = Selection
+
+    ' 1行しか選択されていない場合の警告
+    If rng.Rows.Count < 2 Then
+        MsgBox "2行以上の範囲を選択してください。", vbExclamation, "エラー"
+        Exit Sub
+    End If
+
+    ' 画面の更新を一時停止（処理速度向上）
+    Application.ScreenUpdating = False
+
+    ' まずすべての罫線をクリア
+    rng.Borders.LineStyle = xlNone
+
+    ' 1本目：表の一番上の罫線（中太線）
+    With rng.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .Weight = xlMedium
+        .ColorIndex = xlAutomatic
+    End With
+
+    ' 2本目：表の一番下の罫線（中太線）
+    With rng.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .Weight = xlMedium
+        .ColorIndex = xlAutomatic
+    End With
+
+    ' 追加：選択範囲の内側の水平線（データ行の間の罫線／細線）
+    If rng.Rows.Count > 2 Then
+        With rng.Borders(xlInsideHorizontal)
+            .LineStyle = xlContinuous
+            .Weight = xlThin  ' もっと薄くしたい場合は xlHairline に変更
+            .ColorIndex = xlAutomatic
+        End With
+    End If
+
+    ' 3本目：見出し（1行目）の下の罫線（細線）
+    ' ※内側の水平線で既に引かれていますが、明示的に設定して上書きします
+    With rng.Rows(1).Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .Weight = xlThin
+        .ColorIndex = xlAutomatic
+    End With
+
+    ' 画面の更新を再開
+    Application.ScreenUpdating = True
+
+End Sub
