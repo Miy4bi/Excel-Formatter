@@ -132,7 +132,7 @@ Sub 表罫線を設定()
 
     ' 選択されているのがセル範囲かチェック
     If TypeName(Selection) <> "Range" Then
-        MsgBox "表にしたいセル範囲を選択してから実行してください。", vbExclamation, "
+        MsgBox "表にしたいセル範囲を選択してから実行してください。", vbExclamation, "エラー"
         Exit Sub
     End If
 
@@ -164,11 +164,11 @@ Sub 表罫線を設定()
         .ColorIndex = xlAutomatic
     End With
 
-    ' 追加：選択範囲の内側の水平線（データ行の間の罫線／細線）
+    ' 追加：選択範囲の内側の水平線（データ行の間の罫線 / 細線）
     If rng.Rows.Count > 2 Then
         With rng.Borders(xlInsideHorizontal)
             .LineStyle = xlContinuous
-            .Weight = xlThin  ' もっと薄くしたい場合は xlHairline に変更
+            .Weight = xlThin ' もっと薄くしたい場合は xlHairline に変更
             .ColorIndex = xlAutomatic
         End With
     End If
