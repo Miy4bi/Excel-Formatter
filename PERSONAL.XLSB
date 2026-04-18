@@ -204,7 +204,7 @@ Sub FormatTableBorders()
 End Sub
 
 
-Sub SetFonttoArialandMSPGothic()
+Sub SetJapaneseFonts()
     Dim ws As Worksheet
     
     Application.ScreenUpdating = False
