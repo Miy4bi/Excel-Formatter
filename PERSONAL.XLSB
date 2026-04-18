@@ -211,8 +211,8 @@ Sub SetJapaneseFonts()
     
     For Each ws In ThisWorkbook.Worksheets
         With ws.Cells.Font
-            .Name = "Arial"              ' 欧文（英数字）
-            .FarEastName = "MS Pゴシック"  ' 日本語
+            .Name = "MS Pゴシック"  ' 日本語フォントとして認識される
+            .Name = "Arial"          ' 欧文フォントとして認識される
         End With
     Next ws
     
