@@ -210,13 +210,11 @@ Sub SetJapaneseFonts()
     Application.ScreenUpdating = False
     
     For Each ws In ThisWorkbook.Worksheets
-        With ws.Cells.Font
-            .Name = "MS Pゴシック"  ' 日本語フォントとして認識される
-            .Name = "Arial"          ' 欧文フォントとして認識される
-        End With
+        ws.Cells.Font.Name = "MS Pゴシック"
+        ws.Cells.Font.Name = "Arial"
     Next ws
     
     Application.ScreenUpdating = True
     
-    MsgBox "全シートのフォントを変更しました（英数字:Arial / 日本語:MS Pゴシック）", vbInformation
+    MsgBox "全シートのフォントを変更しました（英数字:Arial / 日本語:MS Pゴシック）, vbInformation
 End Sub
