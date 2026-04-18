@@ -1,65 +1,78 @@
 # 📊 Excel Formatter
 
-コンサルタント向けの Excel 整形マクロ集です。  
-モデルやレポートを仕上げる際の定型作業を自動化できます。
+A collection of Excel formatting macros for consultants. Automates routine cleanup tasks when finalizing models and reports.
 
 ---
 
-## 📁 マクロ一覧
+## 📁 Macro List
 
-| マクロ名 | 概要 |
+| Macro Name | Description |
 |---|---|
-| `auto_open` | ファイルを開いたとき F1（Excelヘルプ）を自動で無効化 |
-| `シート表示リセット` | 全シートの非表示行・列・シートを再表示し、カーソル・倍率をリセット |
-| `入力値色分け` | ベタ打ち数値→青、他シート参照→緑、それ以外→黒に色分け |
-| `表罫線を設定` | 選択範囲に表形式の罫線（上下中太線・見出し下細線・行間細線）を設定 |
+| `auto_open` | Automatically disables F1 (Excel Help) when a file is opened |
+| `ResetSheetView` | Unhides all hidden rows, columns, and sheets; resets cursor position and zoom level |
+| `SetInputColors` | Color-codes cells: hard-coded numbers → blue, references to other sheets → green, everything else → black |
+| `SetTableBorders` | Applies table-style borders to the selected range (thick top/bottom lines, thin line under header, thin lines between rows) |
+| `SetJapaneseFonts` | Sets fonts across all sheets: Arial for Latin characters, MS P Gothic for Japanese |
 
 ---
 
-## 🎨 `入力値色分け`のルール
+## 🎨 `SetInputColors` Rules
 
-| 色 | 対象 |
+| Color | Target |
 |---|---|
-| 🔵 青 | ベタ打ちの数値（仮定・入力値） |
-| 🟢 緑 | 他シートを参照している数式 |
-| ⚫ 黒 | 同シート内の数式・文字列 |
+| 🔵 Blue | Hard-coded numeric values (assumptions / inputs) |
+| 🟢 Green | Formulas referencing other sheets |
+| ⚫ Black | Same-sheet formulas and text |
 
 ---
 
-## `表罫線を設定`のルール
- 
-選択したセル範囲に、コンサル資料でよく使う表形式の罫線を一括で設定するマクロです。
+## `SetTableBorders` Rules
+
+A macro that applies consulting-style table borders to the selected cell range in one click.
 
 <img width="1300" height="498" alt="image" src="https://github.com/user-attachments/assets/a06edac9-4656-40a4-a555-8226f389da65" />
- 
+
 ---
- 
-## 使い方
- 
-1. 罫線を設定したいセル範囲を選択する（**2行以上**）
-2. クイックアクセスツールバーのアイコンをクリック
- 
-> **注意**: 実行前に対象範囲の既存の罫線はすべてクリアされます。
- 
+
+## How to Use
+
+1. Select the cell range where you want to apply borders (**2 rows or more**)
+2. Click the icon on the Quick Access Toolbar
+
+> **Note**: All existing borders in the target range will be cleared before the new borders are applied.
+
 ---
- 
-## エラーになる場合
- 
-| 状況 | メッセージ |
+
+## Error Cases
+
+| Situation | Message |
 |---|---|
-| セル範囲以外を選択している（グラフ・図形など） | 「表にしたいセル範囲を選択してから実行してください。」 |
-| 選択範囲が1行のみ | 「2行以上の範囲を選択してください。」 |
-
-## 🚀 使い方
-
-このマクロは **PERSONAL.XLSB**（個人用マクロブック）にコピーして使うことを想定しています。  
-一度設定すれば、すべての Excel ファイルからマクロを呼び出せるようになります。
-各マクロはクイックアクセスツールバーに登録して使うことを想定しています。
+| Selection is not a cell range (e.g., chart or shape) | "Please select a cell range before running this macro." |
+| Selection is only one row | "Please select a range of 2 or more rows." |
 
 ---
 
-## ⚠️ 注意事項
+## 🔤 `SetJapaneseFonts` Rules
 
-- **シート保護**がかかっているシートは処理をスキップします
-- `入力値色分け` は実行時に自シートへの不要なシート名参照（例：`Sheet1!A1` → `A1`）を自動で除去します
-- ピボットテーブルのフォント色はすべて黒に統一されます
+Applies a standard bilingual font combination to every sheet in the workbook.
+
+| Script | Font |
+|---|---|
+| Latin (alphanumeric) | Arial |
+| Japanese | MS P Gothic |
+
+This combination is commonly used in Japanese business documents to ensure consistent rendering across both scripts.
+
+## 🚀 Setup
+
+These macros are designed to be copied into **PERSONAL.XLSB** (your personal macro workbook).
+
+Once set up, the macros can be called from any Excel file. Each macro is intended to be registered to the Quick Access Toolbar.
+
+---
+
+## ⚠️ Notes
+
+- Sheets with **sheet protection** enabled are skipped
+- `SetInputColors` automatically removes unnecessary self-sheet references at runtime (e.g., `Sheet1!A1` → `A1`)
+- Font colors in pivot tables are all unified to black
